@@ -87,6 +87,13 @@ Los tests cubren:
 - Reversiones por saldo insuficiente, monto cero o límites superados.  
 - Rechazo de envío directo de ETH.
 
+## 📬 Dirección desplegada
+
+**Red:** Sepolia Testnet  
+**Contrato:** [`0x30835A2CD4adEC7D9398213e01b6e4DC00664e7C`](https://sepolia.etherscan.io/address/0x30835A2CD4adEC7D9398213e01b6e4DC00664e7C)  
+**Verificado:** ✅ (código publicado en Etherscan)
+
+
 🧑‍💻 Autor
 
 Nombre: Leandro G
@@ -95,4 +102,4 @@ Fecha de entrega: 5 de octubre de 2025
 
 🪙 Licencia
 
-ETHKIPU © 2025 — Proyecto académico sin fines comerciales.
+ETHKIPU - MIT © 2025 — Proyecto académico sin fines comerciales.
