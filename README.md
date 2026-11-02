@@ -26,7 +26,9 @@ El contrato implementa:
 ## 🧱 Estructura del proyecto
 
 kipu-bank/
-│
+│        
+
+  
 ├── src/
 │ └── KipuBank.sol # Contrato principal
 │
