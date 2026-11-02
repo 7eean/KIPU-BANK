@@ -19,6 +19,7 @@ El contrato implementa:
 - **Errores personalizados** en lugar de strings.
 - **Eventos** en cada depósito y retiro.
 - **Funciones privadas, externas y view** según buenas prácticas.
+- 
 
 ---
 
