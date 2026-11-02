@@ -19,13 +19,13 @@ El contrato implementa:
 - **Errores personalizados** en lugar de strings.
 - **Eventos** en cada depósito y retiro.
 - **Funciones privadas, externas y view** según buenas prácticas.
-- 
 
 ---
 
 ## 🧱 Estructura del proyecto
 
-kipu-bank/
+```text
+KIPU-BANK/
 │
 ├── src/
 │ └── KipuBank.sol # Contrato principal
@@ -39,9 +39,7 @@ kipu-bank/
 ├── foundry.toml # Configuración del proyecto
 ├── remappings.txt # Mapeo de imports (generado)
 └── README.md # Este archivo
-
-yaml
-Copiar código
+```
 
 ---
 
@@ -52,7 +50,7 @@ Copiar código
 | `bankCap` | `uint256 immutable` | Límite global de depósitos |
 | `withdrawCap` | `uint256 immutable` | Límite máximo por retiro |
 | `totalDeposited` | `uint256` | Total actual depositado en el contrato |
-| `balances` | `mapping(address => uint256)` | Balance individual de cada usuario |
+| `_balances` | `mapping(address => uint256) private` | Balance individual; se consulta con `balanceOf(address)` |
 | `depositsCount` / `withdrawalsCount` | `uint256` | Contadores de acciones |
 
 ---
@@ -80,6 +78,45 @@ Copiar código
 - Variables `immutable` y `constant` para reducir gas y riesgos.
 
 ---
+
+## 🛠️ Desarrollo local con Foundry
+
+Se necesitan Git y [Foundry](https://getfoundry.sh/introduction/installation/).
+En Windows, el instalador `foundryup` se ejecuta desde Git Bash o WSL; también
+se pueden usar los binarios oficiales de Foundry para Windows.
+
+```sh
+git clone https://github.com/7eean/KIPU-BANK.git
+cd KIPU-BANK
+forge --version
+forge install --no-git foundry-rs/forge-std@v1.10.0 OpenZeppelin/openzeppelin-contracts@v5.0.2
+forge build --sizes
+forge test -vvv
+forge fmt --check
+```
+
+Las versiones coinciden con `foundry.lock`: forge-std `v1.10.0` y OpenZeppelin
+Contracts `v5.0.2`. La carpeta `lib/` está ignorada y el repositorio no registra
+submódulos en `.gitmodules`, por lo que una clonación recursiva o `forge install`
+sin argumentos no recupera estas dependencias. El comando explícito anterior
+las instala localmente sin agregar submódulos. La primera compilación descarga
+Solc `0.8.24`, la versión fijada en `foundry.toml`.
+
+Estos comandos compilan y prueban en la EVM local de Foundry; no requieren
+clave privada, RPC ni desplegar el contrato en una red.
+
+### Estado de las verificaciones
+
+Sobre el commit `44008fd`, con Forge `1.8.7`, Solc `0.8.24` y las dependencias
+anteriores, `forge build --sizes` compila y los 6 tests existentes pasan.
+Hay problemas preexistentes que deben tenerse en cuenta:
+
+- `forge fmt --check` falla por formato en los archivos Solidity; el workflow
+  de CI se detiene en ese paso antes de compilar o ejecutar los tests.
+- El workflow selecciona el perfil `ci`, que no está definido en `foundry.toml`,
+  y no instala las dependencias faltantes.
+- `forge build --sizes` emite las advertencias de lint `reentrancy-eth` y
+  `reentrancy-events` en `withdraw`.
 
 ## 🧪 Pruebas automatizadas
 
